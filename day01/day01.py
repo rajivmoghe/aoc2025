@@ -29,15 +29,13 @@ class Dial:
         landed_hits = 0
 
         if new_index == 0:
-            crossed_hits += 1
-            landed_hits = 1
             self.landed_counter += 1
         else:
             if delta > 0:  # moving right
                 if self.pointer + remainder >= self.size:
                     crossed_hits += 1
             else:  # moving left
-                if self.pointer - remainder < 0:
+                if self.pointer - remainder < 0 and self.pointer != 0:
                     crossed_hits += 1
 
         self.crossed_counter += crossed_hits
@@ -89,13 +87,6 @@ class Dial:
 dial = Dial()
 
 
-def process_line(line: str):
-    s = line.strip()
-    # print(f"Processed: {s}")
-    direction, steps = s[0], int(s[1:])
-    dial.traverse_slow_clear(direction, steps)
-
-
 def stream_file(filename: str, idle_timeout: float = 1.0):
     filepath = os.path.join(os.path.dirname(__file__), filename)
 
@@ -105,7 +96,7 @@ def stream_file(filename: str, idle_timeout: float = 1.0):
         while True:
             line = f.readline()
             if line:
-                process_line(line)
+                dial.traverse(line.strip()[0], int(line.strip()[1:]))
                 last_activity = time.time()  # reset timer whenever we get data
             else:
                 # No new data yet
