@@ -7,6 +7,7 @@ def get_ranges(aline: str):
 
 
 def check_invalids(inlist):
+    """Slower, brute force algorithm"""
     total = 0
 
     for i in range(100000):
