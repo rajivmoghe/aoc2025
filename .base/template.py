@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import traceback
 
 
 def part_1(lines: list[str]) -> None:
@@ -35,17 +36,17 @@ def main():
         print(f"Read {len(lines)} lines from {filename}")
         lines = process_lines(lines)
         print('small  part 1: ANSWER 1')
-        print("Answer part 1:", part_1(lines))
+        print("Answer part 1: should be", part_1(lines))
         print('small  part 2: ANSWER 2')
-        print("Answer part 2:", part_2(lines))
+        print("Answer part 2: should be", part_2(lines))
 
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found")
         sys.exit(1)
     except Exception as e:
         print(f"Error reading file: {e}")
+        traceback.print_exc()
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
