@@ -6,7 +6,7 @@ def get_ranges(aline: str):
     return [list(apiece.split('-')) for apiece in aline.split(',')]
 
 
-def check_invalids(inlist):
+def part_1(inlist):
     """Slower, brute force algorithm"""
     total = 0
 
@@ -19,7 +19,7 @@ def check_invalids(inlist):
     return total
 
 
-def check_invalids_multi(inlist):
+def part_2(inlist):
     count = 0
     found = set()
 
@@ -59,6 +59,6 @@ if __name__ == "__main__":
         pass
 
     print('small  part 1: 1227775554')
-    print("Answer part 1:", check_invalids(rangelist))
+    print("Answer part 1:", part_1(rangelist))
     print('small  part 2: 4174379265')
-    print("Answer part 2:", check_invalids_multi(rangelist))
+    print("Answer part 2:", part_2(rangelist))
