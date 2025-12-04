@@ -8,15 +8,9 @@ def check(grid, rows, cols, i, j) -> int:
     nbrcount = 0
     for rowidx in range(i-1, i+2):
         for colidx in range(j-1, j+2):
-            if colidx < 0 or colidx >= rows or rowidx < 0 or rowidx >= cols or (rowidx == i and colidx == j):
-                print(f"{rowidx} {colidx} outside the grid - do not use same cell-{(rowidx == i and colidx == j)}")
-            else:
-                print(
-                    f"{rowidx} {colidx} inside the grid - ok to use. Value is {grid[rowidx][colidx]}")
+            if not (colidx < 0 or colidx >= rows or rowidx < 0 or rowidx >= cols or (rowidx == i and colidx == j)):
                 if grid[rowidx][colidx] == '@':
                     nbrcount += 1
-
-    print(f"nbrcount for {i}, {j} is {nbrcount}")
     return nbrcount
 
 
@@ -25,29 +19,36 @@ def part_1(lines: list[list[str]]) -> int:
     cols = len(lines[0])
     okays = 0
 
-    outter = []
     for i in range(rows):
         for j in range(cols):
-            outter.append(lines[i][j])
-            if lines[i][j] == '@':
-                print(f"{i} {j}  Neighbor check required")
-                if check(lines, rows, cols, i, j) < 4:
-                    print("sparse neighbour")
-                    okays += 1
-                else:
-                    print("crowded neighbour")
-            else:
-                print(f"{i} {j}  Neighbor check NOT required")
-
-        outter.append('\n')
-
+            if lines[i][j] == '@' and check(lines, rows, cols, i, j) < 4:
+                okays += 1
     return okays
 
 
-def part_2(lines: list[str]) -> None:
-    # Placeholder for part 2 solution; currently just parses lines
-    parsed = [line.strip() for line in lines if line.strip()]
-    print(f"Part 2 received {len(parsed)} non-empty lines")
+def part_2(lines: list[list[str]]) -> int:
+    rows = len(lines)
+    cols = len(lines[0])
+    removed = 0
+
+    while (True):
+        okays = 0
+        removelist = []
+        for i in range(rows):
+            for j in range(cols):
+                if lines[i][j] == '@' and check(lines, rows, cols, i, j) < 4:
+                    okays += 1
+                    removelist.append([i,j])
+        
+        for apoint in removelist:
+            lines[apoint[0]][apoint[1]] = '.'
+
+        removed += okays
+
+        if (okays == 0):
+            break
+
+    return removed
 
 
 def process_lines(lines: list[str]) -> list[list[str]]:
@@ -67,10 +68,10 @@ def main():
 
         print(f"Read {len(lines)} lines from {filename}")
         lines = process_lines(lines)
-        print('small  part 1: 13\n')
-        print("Answer part 1: should be\n", part_1(lines))
-        # print('small  part 2: ANSWER 2')
-        # print("Answer part 2: should be", part_2(lines))
+        print('small  part 1: 13')
+        print("Answer part 1: should be", part_1(lines))
+        print('small  part 2: 43')
+        print("Answer part 2: should be", part_2(lines))
 
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found")
