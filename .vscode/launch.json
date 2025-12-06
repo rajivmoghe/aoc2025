@@ -2,11 +2,21 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python Debugger: Current File with Arguments",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "args": "${command:pickArgs}"
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Debug js (small input)",
       "program": "${file}",
-      "args": [ "${fileDirname}/small" ],
+      "args": [
+        "${fileDirname}/small"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -14,7 +24,9 @@
       "request": "launch",
       "name": "Debug js (large input)",
       "program": "${file}",
-      "args": [ "${fileDirname}/input" ],
+      "args": [
+        "${fileDirname}/input"
+      ],
       "console": "integratedTerminal"
     }
   ]

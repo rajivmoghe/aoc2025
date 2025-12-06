@@ -31,7 +31,7 @@ def main():
 
     try:
         with open(filename, 'r') as f:
-            lines = f.readlines()
+            lines = [line.strip() for line in f.readlines()]
 
         print(f"Read {len(lines)} lines from {filename}")
         lines = process_lines(lines)
