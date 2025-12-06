@@ -33,26 +33,26 @@ def process_lines2(lines: list[str]) -> list[list[str]]:
     for i in range(numcount):
         lines[i] = lines[i].strip('\n')
 
-    sumnums = []
-    sums = []
+    onesum = []
+    questions = []
     for j in range(len(lines[0])-1, -1, -1):
         strnum = ""
         for k in range(numcount - 1):
             strnum = strnum + lines[k][j]
         if not strnum.strip() or j == 0:
             if j == 0:
-                sumnums.append(strnum)
-                sumnums.append(lines[numcount - 1][j])
-            sums.append(sumnums)
-            sumnums = []
+                onesum.append(strnum)
+                onesum.append(lines[numcount - 1][j])
+            questions.append(onesum)
+            onesum = []
             continue
         elif lines[numcount-1][j] == " ":
-            sumnums.append(strnum)
+            onesum.append(strnum)
         else:
-            sumnums.append(strnum)
-            sumnums.append(lines[numcount - 1][j])
+            onesum.append(strnum)
+            onesum.append(lines[numcount - 1][j])
 
-    return sums
+    return questions
 
 
 def part_2(sums: list[list[str]]) -> int:
